@@ -22,15 +22,15 @@ sequelize.authenticate().then(() => {
 // Define User model
 const User = sequelize.define('User', {
     username: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     email: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     password: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     }
 });
