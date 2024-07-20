@@ -1,0 +1,71 @@
+"endpoints": [
+    {
+      "path": "/api/register",
+      "metode": "POST",
+      "deskripsi": "Mendaftarkan pengguna baru. Memvalidasi input dan melakukan hashing password.",
+      "permintaan": {
+        "body": {
+          "username": "string (wajib diisi)",
+          "email": "email (wajib diisi)",
+          "password": "string (wajib diisi, minimal 6 karakter)"
+        }
+      },
+      "respon": {
+        "sukses": { "pesan": "Registrasi berhasil" },
+        "gagal": { "pesan": "Pesan error yang menjelaskan masalah" }
+      }
+    },
+    {
+      "path": "/api/login",
+      "metode": "POST",
+      "deskripsi": "Melakukan otentikasi pengguna dan mengembalikan token JWT jika kredensial valid.",
+      "permintaan": {
+        "body": {
+          "username": "string (wajib diisi)",
+          "password": "string (wajib diisi)"
+        }
+      },
+      "respon": {
+        "sukses": { "pesan": "Login berhasil", "token": "Token JWT" },
+        "gagal": { "pesan": "Kredensial tidak valid" }
+      }
+    },
+    {
+      "path": "/api/protected",
+      "metode": "GET",
+      "deskripsi": "Rute yang dilindungi yang memerlukan token JWT yang valid untuk akses. Mengembalikan informasi pengguna.",
+      "otentikasi": "Diperlukan (token JWT pada header Authorization)",
+      "respon": {
+        "sukses": { "pengguna": { /* Objek Pengguna */ } },
+        "gagal": { "pesan": "Tidak sah" }
+      }
+    }
+  ],
+  "basisData": {
+    "jenis": "MongoDB",
+    "nama": "basisdataSaya", 
+    "koleksi": [
+      {
+        "nama": "Pengguna",
+        "field": {
+          "_id": "ObjectId",
+          "username": "String (unik)",
+          "email": "String (unik)",
+          "password": "String (ter-hash)" 
+        }
+      }
+    ]
+  },
+  "variabelLingkungan": [
+    "JWT_SECRET (untuk menandatangani token JWT)",
+    "PORT (untuk konfigurasi server)"
+  ],
+  "penangananError": {
+    "jenis": [
+      "Error validasi",
+      "Error otentikasi",
+      "Error basis data",
+      "Error server"
+    ],
+    "strategi": "Middleware penanganan error terpusat"
+  },

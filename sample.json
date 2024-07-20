@@ -1,0 +1,85 @@
+{
+  "title": "QuickSell Website",
+  "description": "A scalable e-commerce platform built with Express.js and MongoDB, featuring JWT authentication, CORS handling, and a user-friendly frontend.",
+  "version": "1.0.0",
+  "technologies": [
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "JWT (JSON Web Tokens)",
+    "body-parser",
+    "dotenv",
+    "cors",
+    "bcrypt",
+    "HTML5",
+    "CSS3",
+    "Bootstrap",
+    "jQuery",
+    "Google Maps API"
+  ],
+  "features": [
+    // Backend Features (as before)
+    "User registration with email validation",
+    "Secure user login with password hashing (bcrypt)",
+    "Token-based authentication with JWT",
+    "CORS handling for cross-origin requests",
+    "Protected routes accessible only with valid tokens",
+    "Error handling and input validation",
+
+    // Frontend Features (from HTML analysis)
+    "Responsive design using Bootstrap",
+    "Carousel for showcasing products on the homepage",
+    "About us section with company vision and mission",
+    "Product listing with pricing and 'Shop Now' buttons",
+    "Order summary display",
+    "Client testimonials carousel",
+    "Contact form",
+    "Interactive map using Google Maps API"
+  ],
+  "endpoints": [
+    // ... (Backend endpoints as before)
+  ],
+  "database": {
+    // ... (MongoDB structure as before)
+  },
+  "environmentVariables": [
+    // ... (Environment variables as before)
+  ],
+  "errorHandling": {
+    // ... (Error handling as before)
+  },
+  "frontendStructure": {
+    "pages": [
+      "index.html (Home)",
+      "about.html (About Us)",
+      "glasses.html (Our Items)",
+      "shop.html (Shop)",
+      "contact.html (Contact Us)",
+      "login.html (Login Form)",
+      "register.html (Registration Form)"
+    ],
+    "layout": "main-layout class applied to the body",
+    "styling": [
+      "css/bootstrap.min.css",
+      "css/style.css",
+      "css/responsive.css",
+      "css/jquery.mCustomScrollbar.min.css"  scrollbar styles
+    ],
+    "scripts": [
+      "js/jquery.min.js",
+      "js/popper.min.js",
+      "js/bootstrap.bundle.min.js",
+      "js/jquery-3.0.0.min.js",
+      "js/jquery.mCustomScrollbar.concat.min.js",
+      "js/custom.js", 
+      "js/index.js", handle responsive
+      "js/ordersummary.js" // handle bagian ordersummary.
+    ]
+  },
+  "additionalNotes": [
+    // ... (Backend notes as before, plus)
+    "Implement client-side form validation for better user experience.",
+    "Consider using a frontend framework like React or Vue.js for more complex interactions."
+  ]
+}

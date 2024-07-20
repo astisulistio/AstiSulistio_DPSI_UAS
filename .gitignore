@@ -1,0 +1,29 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files and node modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+node_modules/
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+
+# Ignore OS generated files
+.DS_Store
+*.log
+
+# Ignore files in parent directories
+../AppData/
+../Desktop/
+../Downloads/
+../Favorites/
+../Links/
+../NTUSER.DAT*
+../OneDrive/
+../Searches/
+../Videos/
+../ntuser.dat.LOG*

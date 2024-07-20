@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.0",
+    "mysql2": "^3.10.3",
+    "pg": "^8.12.0",
+    "react-router-dom": "^6.24.1",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  },
+  "name": "astisulistio_dpsi_",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
