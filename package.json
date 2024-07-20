@@ -11,9 +11,9 @@
   },
   "name": "astisulistio_dpsi_",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "mongodb-auth/server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node mongodb-auth/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
