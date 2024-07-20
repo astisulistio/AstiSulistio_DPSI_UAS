@@ -1,4 +1,11 @@
 {
+  "name": "astisulistio_dpsi_",
+  "version": "1.0.0",
+  "main": "mongodb-auth/server.js",
+  "scripts": {
+    "start": "node mongodb-auth/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
@@ -8,16 +15,5 @@
     "react-router-dom": "^6.24.1",
     "sequelize": "^6.37.3",
     "sequelize-cli": "^6.6.2"
-  },
-  "name": "astisulistio_dpsi_",
-  "version": "1.0.0",
-  "main": "mongodb-auth/server.js",
-  "scripts": {
-    "start": "node mongodb-auth/server",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }
