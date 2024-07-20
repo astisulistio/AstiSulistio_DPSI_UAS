@@ -15,5 +15,7 @@
     "react-router-dom": "^6.24.1",
     "sequelize": "^6.37.3",
     "sequelize-cli": "^6.6.2"
+	"dotenv": "^8.2.0" // Tambahkan baris ini
+
   }
 }

@@ -14,5 +14,7 @@
     "jsonwebtoken": "^8.5.1",
     "body-parser": "^1.19.0",
     "path": "^0.12.7"
+	"dotenv": "^8.2.0" // Tambahkan baris ini
+
   }
 }
