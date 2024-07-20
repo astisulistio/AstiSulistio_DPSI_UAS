@@ -7,4 +7,13 @@ const sequelize = new Sequelize(process.env.DB_DBNAME, process.env.DB_USERNAME, 
   port: 3306
 });
 
-module.exports = sequelize;
+module.exports = {
+  development: {
+    username: 'sql12721016',
+    password: 'VAcFzfRu5F',
+    database: 'sql12721016',
+    host: 'sql12.freesqldatabase.com',
+    port: 3306,
+    dialect: 'mysql',
+  },
+};
