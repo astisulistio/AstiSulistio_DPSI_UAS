@@ -92,23 +92,23 @@
     <!-- end header inner -->
     <!-- end header -->
     <!-- register section -->
-    <div id="register" class="contact">
+  <div id="register" class="contact">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <form class="registerForm" action="http://localhost:3000/api/register" method="POST">
+                    <form id="registerForm">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>Register</h3>
                             </div>
                             <div class="col-md-12">
-                                <input class="contactus" placeholder="Username" type="text" name="username" required>
+                                <input id="username" class="contactus" placeholder="Username" type="text" name="username" required>
                             </div>
                             <div class="col-md-12">
-                                <input class="contactus" placeholder="Email" type="email" name="email" required>
+                                <input id="email" class="contactus" placeholder="Email" type="email" name="email" required>
                             </div>
                             <div class="col-md-12">
-                                <input class="contactus" placeholder="Password" type="password" name="password" required>
+                                <input id="password" class="contactus" placeholder="Password" type="password" name="password" required>
                             </div>
                             <div class="col-md-12">
                                 <button type="submit" class="send_btn">Register</button>
@@ -130,49 +130,34 @@
     <!-- sidebar -->
     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/custom.js"></script>
+    <!-- Fetch API untuk mengirim permintaan register -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const registerForm = document.querySelector('.main_form');
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
         
-            registerForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Menghentikan pengiriman formulir secara default
-        
-                // Ambil nilai dari input
-                const username = document.querySelector('input[name="username"]').value;
-                const email = document.querySelector('input[name="email"]').value;
-                const password = document.querySelector('input[name="password"]').value;
-        
-                // Buat objek data untuk dikirimkan ke server
-                const formData = {
-                    username: username,
-                    email: email,
-                    password: password
-                };
-        
-                // Konfigurasi opsi untuk pengiriman data
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                };
-        
-                // Kirim permintaan ke server
-                fetch('/api/register', options)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle response dari server
-                        console.log('Registrasi berhasil:', data);
-                        // Tambahkan logika lain sesuai kebutuhan (misalnya, tampilkan pesan sukses)
-                    })
-                    .catch(error => {
-                        console.error('Terjadi kesalahan saat registrasi:', error);
-                        // Handle error jika terjadi kesalahan dalam pengiriman data
-                    });
-            });
+        fetch('https://astisulistio-dpsiuas-9d8f0aaf1f7e.herokuapp.com/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Registration Successful!');
+                // Redirect or update UI
+            } else {
+                alert('Registration Failed: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-        </script>
-        
+    });
+    </script>
 </body>
 </html>

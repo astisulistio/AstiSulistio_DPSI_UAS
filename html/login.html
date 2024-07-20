@@ -96,17 +96,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <form id="loginForm" action="http://localhost:3000/api/login" method="POST">
-                        <div>
-                            <label for="username">Username:</label>
-                            <input type="text" id="username" name="username" required>
-                        </div>
-                        <div>
-                            <label for="password">Password:</label>
-                            <input type="password" id="password" name="password" required>
-                        </div>
-                        <div>
-                            <button type="submit">Login</button>
+                    <form id="loginForm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Login</h3>
+                            </div>
+                            <div class="col-md-12">
+                                <input id="loginEmail" class="contactus" placeholder="Email" type="email" name="email" required>
+                            </div>
+                            <div class="col-md-12">
+                                <input id="loginPassword" class="contactus" placeholder="Password" type="password" name="password" required>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="send_btn">Login</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -126,6 +129,31 @@
     <script src="js/custom.js"></script>
     <!-- Fetch API untuk mengirim permintaan login -->
     <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        fetch('https://astisulistio-dpsiuas-9d8f0aaf1f7e.herokuapp.com/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Login Successful!');
+                // Redirect or update UI
+            } else {
+                alert('Login Failed: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
     </script>
 </body>
 </html>
