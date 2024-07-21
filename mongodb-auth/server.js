@@ -102,32 +102,37 @@ app.get('/api/protected', verifyToken, async (req, res) => {
   }
 });
 
-app.post('/api/order', async (req, res) => {
+app.post('/api/order', verifyToken, async (req, res) => {
   const { items, name, email, address } = req.body;
 
   if (!items || !name || !email || !address) {
-      return res.status(400).json({ message: 'Missing required fields' });
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  if (!req.user || !req.user.id) {
+    return res.status(401).json({ message: 'Unauthorized: User ID missing' });
   }
 
   try {
-      const totalAmount = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const totalAmount = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-      const order = new Order({
-          userId: req.user ? req.user.id : null, // Jika userId tidak diperlukan, Anda bisa mengabaikannya
-          items,
-          totalAmount,
-          name,
-          email,
-          address
-      });
+    const order = new Order({
+      userId: req.user.id,
+      items,
+      totalAmount,
+      name,
+      email,
+      address
+    });
 
-      await order.save();
-      res.status(201).json({ message: 'Order placed successfully' });
+    await order.save();
+    res.status(201).json({ message: 'Order placed successfully' });
   } catch (error) {
-      console.error('Order error:', error);
-      res.status(500).json({ message: 'Error placing order' });
+    console.error('Order error:', error);
+    res.status(500).json({ message: 'Error placing order' });
   }
 });
+
 
 
 
