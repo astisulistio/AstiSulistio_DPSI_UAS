@@ -26,7 +26,8 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -130,9 +131,19 @@
     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/custom.js"></script>
     <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- Fetch API untuk mengirim permintaan login -->
     <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+        });
+
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const username = document.getElementById('loginUsername').value;
@@ -149,35 +160,17 @@
             .then(data => {
                 console.log('API Response:', data); // Debugging
                 if (data.token) {
-                    Swal.fire({
-                        title: 'Login Successful!',
-                        icon: 'success',
-                        text: 'You have successfully logged in.',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        // Simpan token dan arahkan ke halaman lain jika perlu
-                        localStorage.setItem('token', data.token); // Contoh menyimpan token
-                        window.location.href = 'dashboard.html'; // Contoh arahkan ke halaman lain
-                    });
+                    toastr.success('You have successfully logged in.');
+                    localStorage.setItem('token', data.token); // Contoh menyimpan token
+                    window.location.href = 'index.html'; // Contoh arahkan ke halaman lain
                 } else {
-                    Swal.fire({
-                        title: 'Login Failed!',
-                        icon: 'error',
-                        text: data.message || 'Unknown error occurred.',
-                        confirmButtonText: 'Try Again'
-                    });
+                    toastr.error(data.message || 'Unknown error occurred.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                Swal.fire({
-                    title: 'Login Failed!',
-                    icon: 'error',
-                    text: error.message || 'An error occurred.',
-                    confirmButtonText: 'Try Again'
-                });
+                toastr.error(error.message || 'An error occurred.');
             });
         });
     </script>
 </body>
-</html>
