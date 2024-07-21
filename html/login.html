@@ -143,17 +143,19 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.token) {
                     alert('Login Successful!');
-                    // Redirect or update UI
+                    console.log('Token:', data.token);
+                    // Save token and redirect or update UI
                 } else {
-                    alert('Login Failed: ' + data.message);
+                    alert('Login Failed: ' + (data.message || 'Unknown error'));
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                alert('Login Failed: ' + error.message);
             });
         });
-        </script>
+    </script>
 </body>
 </html>
