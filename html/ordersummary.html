@@ -1,119 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Summary</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f8f9fa; padding-top: 20px; }
-        .container { background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top: 20px; }
-        .order-details { margin-bottom: 20px; }
-        .order-items { list-style-type: none; padding: 0; }
-        .order-items li { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
-        .order-items li:last-child { border-bottom: none; }
-        .total { margin-top: 10px; font-weight: bold; }
-        .quantity-input { width: 60px; text-align: center; }
-        .form-group { margin-bottom: 15px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-center">Order Summary</h1>
-        <div class="order-details">
-            <ul class="order-items"></ul>
-            <div class="total text-right">
-                <h3>Total Amount: <span id="total-amount">Rp. 0</span></h3>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Summary</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            body { font-family: Arial, sans-serif; background-color: #f8f9fa; padding-top: 20px; }
+            .container { background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top: 20px; }
+            .order-details { margin-bottom: 20px; }
+            .order-items { list-style-type: none; padding: 0; }
+            .order-items li { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+            .order-items li:last-child { border-bottom: none; }
+            .total { margin-top: 10px; font-weight: bold; }
+            .quantity-input { width: 60px; text-align: center; }
+            .form-group { margin-bottom: 15px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-center">Order Summary</h1>
+            <div class="order-details">
+                <ul class="order-items"></ul>
+                <div class="total text-right">
+                    <h3>Total Amount: <span id="total-amount">Rp. 0</span></h3>
+                </div>
+                <form id="order-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </form>
             </div>
-            <form id="order-form">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <textarea id="address" name="address" class="form-control" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Place Order</button>
-            </form>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const orderItemsList = document.querySelector('.order-items');
-            const totalAmountDisplay = document.getElementById('total-amount');
-            const orderForm = document.getElementById('order-form');
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const orderItemsList = document.querySelector('.order-items');
+                const totalAmountDisplay = document.getElementById('total-amount');
+                const orderForm = document.getElementById('order-form');
 
-            const orderData = JSON.parse(localStorage.getItem('orderData')) || [];
+                const orderData = JSON.parse(localStorage.getItem('orderData')) || [];
 
-            if (orderData && orderData.length > 0) {
-                let totalAmount = 0;
+                if (orderData && orderData.length > 0) {
+                    let totalAmount = 0;
 
-                orderData.forEach((item, index) => {
-                    const itemTotal = item.price * item.quantity;
-                    totalAmount += itemTotal;
+                    orderData.forEach((item, index) => {
+                        const itemTotal = item.price * item.quantity;
+                        totalAmount += itemTotal;
 
-                    const orderItemHTML = `
-                        <li>
-                            <span>${index + 1}. ${item.product} (<span class="quantity">${item.quantity}</span> pcs)</span>
-                            <span>Rp. ${itemTotal.toLocaleString()}</span>
-                        </li>
-                    `;
-                    orderItemsList.innerHTML += orderItemHTML;
-                });
-
-                totalAmountDisplay.textContent = `Rp. ${totalAmount.toLocaleString()}`;
-            }
-
-            orderForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const address = document.getElementById('address').value;
-
-                const orderDetails = {
-                    items: orderData,
-                    name,
-                    email,
-                    address
-                };
-
-                const token = localStorage.getItem('token'); // Assuming you have stored token in localStorage
-
-                try {
-                    const response = await fetch('http://localhost:3000/api/order', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': token
-                        },
-                        body: JSON.stringify(orderDetails)
+                        const orderItemHTML = `
+                            <li>
+                                <span>${index + 1}. ${item.product} (<span class="quantity">${item.quantity}</span> pcs)</span>
+                                <span>Rp. ${itemTotal.toLocaleString()}</span>
+                            </li>
+                        `;
+                        orderItemsList.innerHTML += orderItemHTML;
                     });
 
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        alert('Order placed successfully!');
-                        localStorage.removeItem('orderData'); // Clear order data after successful submission
-                        window.location.reload(); // Reload the page to reset the form
-                    } else {
-                        alert(`Error: ${result.message}`);
-                    }
-                } catch (error) {
-                    console.error('Error placing order:', error);
-                    alert('Error placing order');
+                    totalAmountDisplay.textContent = `Rp. ${totalAmount.toLocaleString()}`;
                 }
+
+                orderForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const address = document.getElementById('address').value;
+
+                    const orderDetails = {
+                        items: orderData,
+                        name,
+                        email,
+                        address
+                    };
+
+                    const token = localStorage.getItem('token'); // Assuming you have stored token in localStorage
+
+                    try {
+                        const response = await fetch('https://astisulistio-dpsiuas-9d8f0aaf1f7e.herokuapp.com/api/order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': token
+                            },
+                            body: JSON.stringify(orderDetails)
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            alert('Order placed successfully!');
+                            localStorage.removeItem('orderData'); // Clear order data after successful submission
+                            window.location.reload(); // Reload the page to reset the form
+                        } else {
+                            alert(`Error: ${result.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error placing order:', error);
+                        alert('Error placing order');
+                    }
+                });
             });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>

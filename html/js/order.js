@@ -1,18 +1,42 @@
-const mongoose = require('mongoose');
+const orderForm = document.getElementById('order-form');
 
-const OrderSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    items: [
-        {
-            product: { type: String, required: true },
-            price: { type: Number, required: true },
-            quantity: { type: Number, required: true }
+orderForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+
+    const orderDetails = {
+        items: orderData,
+        name,
+        email,
+        address
+    };
+
+    const token = localStorage.getItem('token'); // Assuming you have stored token in localStorage
+
+    try {
+        const response = await fetch('https://astisulistio-dpsiuas-9d8f0aaf1f7e.herokuapp.com/api/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Ensure you use 'Bearer' prefix
+            },
+            body: JSON.stringify(orderDetails)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert('Order placed successfully!');
+            localStorage.removeItem('orderData'); // Clear order data after successful submission
+            window.location.reload(); // Reload the page to reset the form
+        } else {
+            alert(`Error: ${result.message}`);
         }
-    ],
-    totalAmount: { type: Number, required: true },
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    address: { type: String, required: true }
-}, { timestamps: true });
-
-module.exports = mongoose.model('Order', OrderSchema);
+    } catch (error) {
+        console.error('Error placing order:', error);
+        alert('Error placing order');
+    }
+});

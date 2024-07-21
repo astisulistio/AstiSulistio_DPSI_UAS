@@ -4,6 +4,8 @@ const cors = require('cors');
 const bcrypt = require('bcrypt'); // Mengimpor bcrypt untuk hashing password
 const User = require('../models/user'); // Mengimpor model User dari models/User
 const sequelize = require('../config/database'); // Koneksi ke MySQL
+const Order = require('../models/Order');
+
 const path = require('path');
 
 const app = express();
@@ -99,6 +101,35 @@ app.get('/api/protected', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+app.post('/api/order', verifyToken, async (req, res) => {
+  const { items, name, email, address } = req.body;
+
+  if (!items || !name || !email || !address) {
+      return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+      const totalAmount = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+      const order = new Order({
+          userId: req.user.id,
+          items,
+          totalAmount,
+          name,
+          email,
+          address
+      });
+
+      await order.save();
+      res.status(201).json({ message: 'Order placed successfully' });
+  } catch (error) {
+      console.error('Order error:', error);
+      res.status(500).json({ message: 'Error placing order' });
+  }
+});
+
+
 
 // Route untuk halaman utama
 app.get('/', (req, res) => {
