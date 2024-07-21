@@ -102,7 +102,7 @@ app.get('/api/protected', verifyToken, async (req, res) => {
   }
 });
 
-app.post('/api/order', verifyToken, async (req, res) => {
+app.post('/api/order', async (req, res) => {
   const { items, name, email, address } = req.body;
 
   if (!items || !name || !email || !address) {
@@ -113,7 +113,7 @@ app.post('/api/order', verifyToken, async (req, res) => {
       const totalAmount = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
       const order = new Order({
-          userId: req.user.id,
+          userId: req.user ? req.user.id : null, // Jika userId tidak diperlukan, Anda bisa mengabaikannya
           items,
           totalAmount,
           name,
@@ -128,6 +128,7 @@ app.post('/api/order', verifyToken, async (req, res) => {
       res.status(500).json({ message: 'Error placing order' });
   }
 });
+
 
 
 
