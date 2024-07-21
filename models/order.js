@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Pastikan jalur ini sesuai dengan lokasi file database.js
+const sequelize = require('../config/database');
 
 const Order = sequelize.define('Order', {
     userId: {
@@ -7,7 +7,7 @@ const Order = sequelize.define('Order', {
         allowNull: false
     },
     items: {
-        type: DataTypes.TEXT, // Menyimpan array item sebagai JSON
+        type: DataTypes.TEXT, // Menyimpan array item sebagai JSON string
         allowNull: false
     },
     totalAmount: {
