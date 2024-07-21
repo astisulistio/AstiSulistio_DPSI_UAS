@@ -123,13 +123,13 @@ app.post('/api/order', async (req, res) => {
           address
       });
 
-      // Jangan hapus data order di sini
       res.status(201).json({ message: 'Order placed successfully' });
   } catch (error) {
       console.error('Order error:', error);
       res.status(500).json({ message: 'Error placing order' });
   }
 });
+
 
 
 
