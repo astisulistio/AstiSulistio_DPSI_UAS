@@ -60,32 +60,33 @@ app.post('/api/register', async (req, res) => {
 
 // Rute login
 app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-  console.log('Login request:', { username, password }); // Log input request
-
-  try {
-    const user = await User.findOne({ where: { username } });
-    console.log('User found:', user); // Log user found
-
-    if (!user) {
-      console.error('User not found for username:', username); // Log jika pengguna tidak ditemukan
-      return res.status(404).json({ message: 'Username atau password salah' });
+    const { username, password } = req.body;
+    console.log('Login request received:', { username, password }); // Log request body
+  
+    try {
+      const user = await User.findOne({ where: { username } });
+      console.log('User found:', user); // Log user found
+  
+      if (!user) {
+        console.error('User not found:', username); // Log if user not found
+        return res.status(404).json({ message: 'Username atau password salah' });
+      }
+  
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        console.error('Invalid password for user:', username); // Log if password invalid
+        return res.status(404).json({ message: 'Username atau password salah' });
+      }
+  
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+      console.log('Generated token:', token); // Log generated token
+      res.json({ token });
+    } catch (error) {
+      console.error('Login error:', error); // Log error
+      res.status(500).json({ message: 'Terjadi kesalahan saat login' });
     }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      console.error('Password mismatch for username:', username); // Log jika password tidak cocok
-      return res.status(404).json({ message: 'Username atau password salah' });
-    }
-
-    const payload = { id: user.id };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-  } catch (error) {
-    console.error('Error during login:', error); // Log error
-    res.status(500).json({ message: 'Terjadi kesalahan saat login' });
-  }
-});
+  });
+  
 
 // Rute yang dilindungi
 app.get('/api/protected', verifyToken, async (req, res) => {
