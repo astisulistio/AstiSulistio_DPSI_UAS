@@ -88,7 +88,7 @@
                 };
 
                 try {
-                    const response = await fetch('https://astisulistio-dpsiuas-9d8f0aaf1f7e.herokuapp.com/api/order', {
+                    const response = await fetch('/api/order', { // Sesuaikan URL dengan endpoint API
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -102,7 +102,7 @@
                     if (response.ok) {
                         alert('Order placed successfully!');
                         localStorage.removeItem('orderData'); // Clear order data after successful submission
-                        window.location.href = 'thankyou.html'; // Arahkan ke halaman thank you
+                        window.location.href = 'thankyou.html'; // Redirect to thank you page
                     } else {
                         alert(`Error: ${result.message}`);
                     }

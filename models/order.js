@@ -1,18 +1,15 @@
+// models/order.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Order = sequelize.define('Order', {
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     items: {
-        type: DataTypes.TEXT, // Menyimpan array item sebagai JSON string
+        type: DataTypes.TEXT,
         allowNull: false
     },
     totalAmount: {
         type: DataTypes.FLOAT,
-        allowNull: false    
+        allowNull: false
     },
     name: {
         type: DataTypes.STRING,
@@ -26,6 +23,7 @@ const Order = sequelize.define('Order', {
         type: DataTypes.STRING,
         allowNull: false
     }
+    // userId dihapus dari sini jika tidak diperlukan
 }, {
     timestamps: true
 });
