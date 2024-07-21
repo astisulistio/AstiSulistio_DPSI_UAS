@@ -102,22 +102,17 @@ app.get('/api/protected', verifyToken, async (req, res) => {
   }
 });
 
-app.post('/api/order', verifyToken, async (req, res) => {
+app.post('/api/order', async (req, res) => {
   const { items, name, email, address } = req.body;
 
   if (!items || !name || !email || !address) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
-  if (!req.user || !req.user.id) {
-    return res.status(401).json({ message: 'Unauthorized: User ID missing' });
-  }
-
   try {
     const totalAmount = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     const order = new Order({
-      userId: req.user.id,
       items,
       totalAmount,
       name,
