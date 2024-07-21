@@ -4,16 +4,20 @@ const cors = require('cors');
 const bcrypt = require('bcrypt'); // Mengimpor bcrypt untuk hashing password
 const User = require('../models/user'); // Mengimpor model User dari models/User
 const sequelize = require('../config/database'); // Koneksi ke MySQL
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Kunci rahasia JWT diambil dari variabel lingkungan
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'astisulistio'; // Ganti dengan kunci rahasia Anda
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware untuk melayani file statis dari folder html
+app.use(express.static(path.join(__dirname, '../html')));
 
 // Test koneksi ke database
 sequelize.authenticate()
@@ -95,10 +99,27 @@ app.get('/api/protected', verifyToken, async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+// Route untuk halaman utama
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/index.html')); // Ganti jika ada file utama
 });
 
+// Route untuk halaman register
+app.get('/register.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/register.html'));
+});
+
+// Route untuk halaman login
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/login.html'));
+});
+
+// Contoh route API, sesuaikan dengan kebutuhan
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working' });
+});
+
+// Sinkronisasi Sequelize dengan database
 sequelize.sync()
   .then(() => {
     console.log('Database & tables created!');
@@ -106,3 +127,8 @@ sequelize.sync()
   .catch(err => {
     console.error('Error creating database tables:', err);
   });
+
+// Mulai server
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
