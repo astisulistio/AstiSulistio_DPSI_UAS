@@ -4,7 +4,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt'); // Mengimpor bcrypt untuk hashing password
 const User = require('../models/user'); // Mengimpor model User dari models/User
 const sequelize = require('../config/database'); // Koneksi ke MySQL
-const Order = require('../models/Order');
+const Order = require('../models/order');
 
 const path = require('path');
 
