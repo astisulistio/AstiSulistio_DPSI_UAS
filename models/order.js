@@ -7,7 +7,7 @@ const Order = sequelize.define('Order', {
         allowNull: false
     },
     items: {
-        type: DataTypes.JSON, // Menyimpan array item sebagai JSON
+        type: DataTypes.TEXT, // Menyimpan array item sebagai JSON
         allowNull: false
     },
     totalAmount: {
