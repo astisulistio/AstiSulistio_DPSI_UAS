@@ -143,17 +143,35 @@
             })
             .then(response => response.json())
             .then(data => {
+                console.log('API Response:', data); // Debugging
                 if (data.token) {
-                    alert('Login Successful!');
-                    console.log('Token:', data.token);
-                    // Save token and redirect or update UI
+                    Swal.fire({
+                        title: 'Login Successful!',
+                        icon: 'success',
+                        text: 'You have successfully logged in.',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Simpan token dan arahkan ke halaman lain jika perlu
+                        localStorage.setItem('token', data.token); // Contoh menyimpan token
+                        window.location.href = 'dashboard.html'; // Contoh arahkan ke halaman lain
+                    });
                 } else {
-                    alert('Login Failed: ' + (data.message || 'Unknown error'));
+                    Swal.fire({
+                        title: 'Login Failed!',
+                        icon: 'error',
+                        text: data.message || 'Unknown error occurred.',
+                        confirmButtonText: 'Try Again'
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Login Failed: ' + error.message);
+                Swal.fire({
+                    title: 'Login Failed!',
+                    icon: 'error',
+                    text: error.message || 'An error occurred.',
+                    confirmButtonText: 'Try Again'
+                });
             });
         });
     </script>
