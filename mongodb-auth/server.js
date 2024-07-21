@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bcrypt = require('bcrypt'); // Mengimpor bcrypt untuk hashing password
-const User = require('../models/User'); // Mengimpor model User dari models/User
+const User = require('../models/user'); // Mengimpor model User dari models/User
 const sequelize = require('../config/database'); // Koneksi ke MySQL
 
 const app = express();
