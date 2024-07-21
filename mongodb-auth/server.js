@@ -103,6 +103,7 @@ app.get('/api/protected', verifyToken, async (req, res) => {
 });
 
 // server.js
+// server.js
 app.post('/api/order', async (req, res) => {
   const { items, name, email, address } = req.body;
 
@@ -113,6 +114,7 @@ app.post('/api/order', async (req, res) => {
   try {
       const totalAmount = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+      // Simpan data order ke database
       const order = await Order.create({
           items: JSON.stringify(items), // Convert items to JSON string
           totalAmount,
@@ -121,15 +123,14 @@ app.post('/api/order', async (req, res) => {
           address
       });
 
-      // Menghapus data order setelah disimpan
-      await Order.destroy({ where: { id: order.id } });
-
+      // Jangan hapus data order di sini
       res.status(201).json({ message: 'Order placed successfully' });
   } catch (error) {
       console.error('Order error:', error);
       res.status(500).json({ message: 'Error placing order' });
   }
 });
+
 
 
 app.get('/api/orders/:id', async (req, res) => {
